@@ -26,7 +26,8 @@ class _SplashScreenState extends State<SplashScreen>
       if (status != AnimationStatus.completed) return;
 
       await checkNeededPermissions();
-      context.router.replace(const HomeRoute());
+      //TODO CONTROLLA PAIRING SE SI PUO
+      context.router.replace(const ScanRoute());
     });
   }
 
