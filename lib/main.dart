@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:iotee/screens/splash/slpash_screen.dart';
+import 'package:iotee/core/route.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final _appRouter = AppRouter();
+
+  MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) => const MaterialApp(
-        title: 'IoTee',
-        home: SplashScreen(),
-      );
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      title: 'IoTee',
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
+    );
+  }
 }
