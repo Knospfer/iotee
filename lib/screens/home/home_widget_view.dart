@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iotee/core/widgets/iotee_button.dart';
 import 'package:iotee/screens/home/home_screen.dart';
@@ -13,6 +12,12 @@ class HomeWidgetView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _FilledView(this),
+      floatingActionButton: FloatingActionButton(
+        onPressed: state.toggleEnabled,
+        child: Icon(
+          state.enabled ? Icons.power_off : Icons.settings_power,
+        ),
+      ),
     );
   }
 }
@@ -52,21 +57,37 @@ class _FilledView extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          title: const Text(
-            "ITEM NAME",
-            style: TextStyle(color: Colors.black),
-          ),
+          expandedHeight: 120,
           backgroundColor: Colors.transparent,
-          actions: [
-            Switch(
-              value: parent.state.enabled,
-              onChanged: parent.state.toggleEnabled,
+          flexibleSpace: FlexibleSpaceBar(
+            background: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              alignment: Alignment.bottomLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Text(
+                    "Here's what",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    "you can do with",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    "ITEM NAME",
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
-          ],
+          ),
         ),
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
+                .copyWith(top: 36),
             child: IoteeButton(
               label: "Change color!",
               onTap: () {},
@@ -99,7 +120,8 @@ class _FilledView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: IoteeButton(
               label: "Custom color",
-              onTap: () {},
+              backgroundColor: parent.state.pickedColor,
+              onTap: () => parent.state.showColorPicker(context),
               enabled: parent.state.enabled,
             ),
           ),

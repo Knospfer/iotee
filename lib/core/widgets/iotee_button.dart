@@ -25,7 +25,7 @@ class IoteeButton extends StatelessWidget {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
       child: Material(
         child: InkWell(
