@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:iotee/core/route.dart';
 import 'package:iotee/screens/scan_screen/scan_widget_view.dart';
@@ -12,24 +15,41 @@ class ScanScreen extends StatefulWidget {
 }
 
 class ScanScreenState extends State<ScanScreen> {
+  final flutterBlue = FlutterBluePlus.instance;
   bool scanning = false;
 
-  final List<String> items = [];
+  late final StreamSubscription subscription;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    subscription = flutterBlue.scanResults.listen((results) {
+      if (results.isEmpty) return;
+      setState(() {
+        scanning = false;
+      });
+    });
+
     startScanning();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    subscription.cancel();
   }
 
   Future<void> startScanning() async {
     setState(() {
       scanning = true;
     });
-    await Future.delayed(const Duration(seconds: 2));
+    flutterBlue.startScan(timeout: const Duration(seconds: 4));
+
+    //aggiorno la grafica se non ho trovato niente
+    await Future.delayed(const Duration(seconds: 4));
     setState(() {
       scanning = false;
-      items.add("HM-V100");
     });
   }
 

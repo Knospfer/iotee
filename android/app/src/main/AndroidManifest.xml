@@ -1,9 +1,46 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.iotee">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />  
-	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />  
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> 
+    <!-- Request legacy Bluetooth permissions on older devices. -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        tools:remove="android:maxSdkVersion" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+
+    <!-- Needed only if your app looks for Bluetooth devices.
+         If your app doesn't use Bluetooth scan results to derive physical
+         location information, you can strongly assert that your app
+         doesn't derive physical location. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
+    <!-- Needed only if your app makes the device discoverable to Bluetooth
+         devices. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+
+    <!-- Needed only if your app communicates with already-paired Bluetooth
+         devices. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <!-- ACCESS_FINE_LOCATION is necessary because, on Android 11 and lower,
+    a Bluetooth scan could potentially be used to gather information about the location of the user.
+     If your app targets Android 9 (API level 28) or lower,
+     you can declare the ACCESS_COARSE_LOCATION permission instead of the ACCESS_FINE_LOCATION permission. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!--    If your app supports a service and can run on Android 10 (API level 29) or Android 11,
+    you must also declare the ACCESS_BACKGROUND_LOCATION permission to discover Bluetooth devices.
+    For more information on this requirement, see Access location in the background.-->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!-- If you say the feature is required for your app,
+    then the Google Play store will hide your app from users on devices lacking those features.
+    For this reason, you should only set the required attribute to true if your app can't work without the feature.-->
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
    <application
         android:label="iotee"

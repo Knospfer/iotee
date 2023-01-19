@@ -49,12 +49,28 @@ class _LoadedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-        onTap: () => state.connect(state.items[index]),
-        title: Text(state.items[index]),
-      ),
-      itemCount: state.items.length,
-    );
+    return StreamBuilder(
+        stream: state.flutterBlue.scanResults.map(
+          (event) => event
+              .where((element) => element.device.name.contains("HM"))
+              .toList(),
+        ),
+        builder: (context, snapshot) {
+          final items = snapshot.data;
+          if (items == null) return const SizedBox();
+
+          return ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final device = items[index].device;
+
+              return ListTile(
+                onTap: () => state.connect(device.id.id),
+                title: Text(device.name),
+                subtitle: Text(device.id.id),
+              );
+            },
+          );
+        });
   }
 }
