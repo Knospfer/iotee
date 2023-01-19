@@ -14,9 +14,7 @@ class HomeWidgetView extends StatelessWidget {
       body: _FilledView(this),
       floatingActionButton: FloatingActionButton(
         onPressed: state.toggleEnabled,
-        child: Icon(
-          state.enabled ? Icons.flashlight_off : Icons.flashlight_on,
-        ),
+        child: const Icon(Icons.power_settings_new),
       ),
     );
   }
@@ -56,33 +54,8 @@ class _FilledView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        SliverAppBar(
-          expandedHeight: 120,
-          backgroundColor: Colors.transparent,
-          flexibleSpace: FlexibleSpaceBar(
-            background: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              alignment: Alignment.bottomLeft,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Text(
-                    "Here's what",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    "you can do with",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    "ITEM NAME",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-          ),
+        const SliverAppBar(
+          title: Text('IoTee'),
         ),
         SliverToBoxAdapter(
           child: Padding(
@@ -90,7 +63,7 @@ class _FilledView extends StatelessWidget {
                 .copyWith(top: 36),
             child: IoteeButton(
               label: "Change color!",
-              onTap: () {},
+              onTap: parent.state.changeColor,
               enabled: parent.state.enabled,
             ),
           ),
@@ -100,7 +73,7 @@ class _FilledView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: IoteeButton(
               label: "Rainbow mode",
-              onTap: () {},
+              onTap: parent.state.slowRainbowMode,
               enabled: parent.state.enabled,
             ),
           ),
@@ -110,7 +83,7 @@ class _FilledView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: IoteeButton(
               label: "Fast Rainbow mode",
-              onTap: () {},
+              onTap: parent.state.fastRainbowMode,
               enabled: parent.state.enabled,
             ),
           ),

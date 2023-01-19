@@ -13,7 +13,21 @@ class HomeScreenSate extends State<HomeScreen> {
   bool enabled = true;
   Color pickedColor = Colors.pink; //TODO QUANDO TAPPO ALTRI TASTI RESETTA
 
+  void changeColor() {
+    _resetPickedColor();
+  }
+
+  void slowRainbowMode() {
+    _resetPickedColor();
+  }
+
+  void fastRainbowMode() {
+    _resetPickedColor();
+  }
+
   void toggleEnabled() {
+    _resetPickedColor();
+
     setState(() {
       enabled = !enabled;
     });
@@ -39,6 +53,12 @@ class HomeScreenSate extends State<HomeScreen> {
       ),
     );
     //TODO QUA AGGIORNA BT
+  }
+
+  void _resetPickedColor() {
+    setState(() {
+      pickedColor = Colors.pink;
+    });
   }
 
   @override
