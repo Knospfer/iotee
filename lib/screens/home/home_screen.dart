@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:iotee/screens/home/home_widget_view.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,7 +27,11 @@ class HomeScreenSate extends State<HomeScreen> {
   }
 
   void toggleEnabled() {
-    _resetPickedColor();
+    _handleWithLoadings(() async {
+      await Future.delayed(Duration(seconds: 1));
+
+      _resetPickedColor();
+    });
 
     setState(() {
       enabled = !enabled;
@@ -53,6 +58,18 @@ class HomeScreenSate extends State<HomeScreen> {
       ),
     );
     //TODO QUA AGGIORNA BT
+  }
+
+  Future<void> _handleWithLoadings(Future Function() callback) async {
+    EasyLoading.show(maskType: EasyLoadingMaskType.black);
+    try {
+      await callback();
+      await EasyLoading.dismiss();
+      await EasyLoading.showToast("Success!",
+          toastPosition: EasyLoadingToastPosition.bottom);
+    } catch (_) {
+      await EasyLoading.showError("Error");
+    }
   }
 
   void _resetPickedColor() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:iotee/core/route.dart';
 
 void main() {
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'IoTee',
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
+      builder: EasyLoading.init(),
     );
   }
 }

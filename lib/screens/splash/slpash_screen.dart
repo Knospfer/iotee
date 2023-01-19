@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:iotee/core/route.dart';
 import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -18,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
+    _initLoading();
 
     _controller = AnimationController(vsync: this);
     _controller.addStatusListener((status) async {
@@ -50,6 +52,13 @@ class _SplashScreenState extends State<SplashScreen>
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _initLoading() {
+    EasyLoading.instance
+      ..loadingStyle = EasyLoadingStyle.light
+      ..indicatorType = EasyLoadingIndicatorType.pulse
+      ..dismissOnTap = true;
   }
 
   @override
