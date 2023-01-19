@@ -61,12 +61,15 @@ class HomeScreenSate extends State<HomeScreen> {
   }
 
   Future<void> _handleWithLoadings(Future Function() callback) async {
-    EasyLoading.show(maskType: EasyLoadingMaskType.black);
+    EasyLoading.show();
     try {
       await callback();
       await EasyLoading.dismiss();
-      await EasyLoading.showToast("Success!",
-          toastPosition: EasyLoadingToastPosition.bottom);
+      await EasyLoading.showToast(
+        "Success!",
+        toastPosition: EasyLoadingToastPosition.bottom,
+        maskType: EasyLoadingMaskType.none,
+      );
     } catch (_) {
       await EasyLoading.showError("Error");
     }

@@ -57,6 +57,9 @@ class _SplashScreenState extends State<SplashScreen>
   void _initLoading() {
     EasyLoading.instance
       ..loadingStyle = EasyLoadingStyle.light
+      ..indicatorWidget = Lottie.asset('assets/loading.json')
+      ..maskType = EasyLoadingMaskType.custom
+      ..maskColor = Colors.white.withOpacity(0.4)
       ..indicatorType = EasyLoadingIndicatorType.pulse
       ..dismissOnTap = true;
   }
