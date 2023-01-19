@@ -9,6 +9,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenSate extends State<HomeScreen> {
+  bool enabled = true;
+
+  void toggleEnabled(bool value) {
+    setState(() {
+      enabled = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) => HomeWidgetView(this);
 }
