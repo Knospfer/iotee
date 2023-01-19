@@ -15,7 +15,7 @@ class HomeWidgetView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: state.toggleEnabled,
         child: Icon(
-          state.enabled ? Icons.power_off : Icons.settings_power,
+          state.enabled ? Icons.flashlight_off : Icons.flashlight_on,
         ),
       ),
     );
