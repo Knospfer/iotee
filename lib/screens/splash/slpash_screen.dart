@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:iotee/core/route.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +20,8 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller = AnimationController(vsync: this);
     _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {}
+      if (status != AnimationStatus.completed) return;
+      context.router.replace(const HomeRoute());
     });
   }
 
