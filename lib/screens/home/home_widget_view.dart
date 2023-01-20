@@ -10,6 +10,7 @@ class HomeWidgetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('IoTee')),
       body: AnimatedSwitcher(
         duration: const Duration(seconds: 1),
         child: state.isEmpty
@@ -38,81 +39,69 @@ class _FilledView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        const SliverAppBar(
-          title: Text('IoTee'),
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              parent.state.widget.device.name,
-              style: const TextStyle(fontSize: 12),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(
+            parent.state.widget.device.name,
+            style: const TextStyle(fontSize: 12),
           ),
         ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.all(16).copyWith(top: 44),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: parent.state.toggleEnabled,
+        Padding(
+          padding: const EdgeInsets.all(16).copyWith(top: 30),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: parent.state.toggleEnabled,
+                child: Container(
+                  height: 60,
+                  width: 60,
+                  alignment: Alignment.center,
+                  decoration: ButtonStyle(),
+                  child: const Icon(
+                    Icons.power_settings_new,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 24),
+              Expanded(
+                child: GestureDetector(
+                  onTap: parent.state.changeColor,
                   child: Container(
                     height: 60,
-                    width: 60,
                     alignment: Alignment.center,
                     decoration: ButtonStyle(),
-                    child: const Icon(
-                      Icons.power_settings_new,
-                      color: Colors.white,
-                    ),
+                    child: const Text("COLOR"),
                   ),
                 ),
-                const SizedBox(width: 24),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: parent.state.changeColor,
-                    child: Container(
-                      height: 60,
-                      alignment: Alignment.center,
-                      decoration: ButtonStyle(),
-                      child: const Text("COLOR"),
-                    ),
-                  ),
-                ),
-              ],
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: GestureDetector(
+            onTap: parent.state.slowRainbowMode,
+            child: Container(
+              height: 200,
+              alignment: Alignment.center,
+              decoration: ButtonStyle(),
+              child: const Text("RAINBOW"),
             ),
           ),
         ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: GestureDetector(
-              onTap: parent.state.slowRainbowMode,
-              child: Container(
-                height: 200,
-                alignment: Alignment.center,
-                decoration: ButtonStyle(),
-                child: const Text("RAINBOW"),
-              ),
-            ),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: GestureDetector(
-              onTap: () => parent.state.showColorPicker(context),
-              child: Container(
-                height: 60,
-                alignment: Alignment.center,
-                decoration: ButtonStyle().copyWith(
-                  color: parent.state.pickedColor,
-                ),
-                child: const Text("CUSTOM"),
-              ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: GestureDetector(
+            onTap: () => parent.state.showColorPicker(context),
+            child: Container(
+              height: 60,
+              alignment: Alignment.center,
+              decoration: ButtonStyle(),
+              child: const Text("CUSTOM"),
             ),
           ),
         ),
