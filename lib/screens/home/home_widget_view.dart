@@ -13,10 +13,6 @@ class HomeWidgetView extends StatelessWidget {
     return Scaffold(
       body: AnimatedSwitcher(
         duration: const Duration(seconds: 1),
-        // transitionBuilder: (child, animation) => FadeTransition(
-        //   opacity: animation,
-        //   child: child,
-        // ),
         child: state.isEmpty
             ? _EmptyView(this, key: UniqueKey())
             : _FilledView(this, key: UniqueKey()),

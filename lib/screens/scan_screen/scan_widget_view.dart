@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iotee/core/widgets/no_items_placeholder.dart';
+import 'package:iotee/main.dart';
 import 'package:iotee/screens/scan_screen/scan_screen.dart';
 import 'package:lottie/lottie.dart';
 
@@ -72,11 +73,10 @@ class _LoadedPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final device = items[index].device;
 
-                        return ListTile(
+                        return _ListTile(
                           onTap: () => state.connect(device),
-                          title: Text(device.name),
-                          subtitle: Text(device.id.id),
-                          trailing: const Icon(Icons.bluetooth),
+                          title: device.name,
+                          subtitle: "ID: ${device.id.id}",
                         );
                       },
                     ),
@@ -99,14 +99,80 @@ class _Title extends StatelessWidget {
         children: const [
           Text(
             "Hey!",
-            style: TextStyle(fontSize: 22),
+            style: TextStyle(fontSize: 34, color: textColor),
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 12),
           Text(
             "Here's what I found: ",
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 24, color: textColor),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ListTile extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final void Function()? onTap;
+
+  const _ListTile({this.onTap, required this.title, required this.subtitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      margin: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+      child: Material(
+        child: InkWell(
+          splashFactory: InkSplash.splashFactory,
+          onTap: onTap,
+          child: Container(
+              color: darkColor,
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: textColor),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          subtitle,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: textColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade300,
+                      borderRadius: const BorderRadius.all(Radius.circular(40)),
+                    ),
+                    child: const Icon(
+                      Icons.bluetooth_rounded,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              )),
+        ),
       ),
     );
   }

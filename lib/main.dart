@@ -16,12 +16,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'IoTee',
       theme: ThemeData(
+        platform: TargetPlatform.iOS,
+        primaryColor: darkColor,
+        splashColor: darkColor,
+        fontFamily: 'Montserrat',
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
+          titleTextStyle: TextStyle(
+            color: textColor,
+            fontSize: 20,
+            fontFamily: 'Pacifico',
+          ),
         ),
-        scaffoldBackgroundColor: const Color(0xF7F7F7),
+        scaffoldBackgroundColor: darkerColor,
       ),
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
@@ -29,3 +37,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+const darkerColor = Color(0xff082032);
+const darkColor = Color(0xff2C394B);
+const mediumColor = Color(0xff7B6CF6);
+const lightColor = Color(0xffE5A5FF);
+const textColor = Colors.white;
