@@ -16,6 +16,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'IoTee',
       theme: ThemeData(
+        textTheme: const TextTheme(
+          headline1: TextStyle(color: textColor),
+          headline2: TextStyle(color: textColor),
+          bodyText2: TextStyle(color: textColor),
+          subtitle1: TextStyle(color: textColor),
+        ),
         platform: TargetPlatform.iOS,
         primaryColor: darkColor,
         splashColor: darkColor,
