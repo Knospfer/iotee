@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:iotee/screens/home/home_widget_view.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final BluetoothDevice device;
+  const HomeScreen({super.key, required this.device});
 
   @override
   State<StatefulWidget> createState() => HomeScreenSate();
@@ -13,6 +15,12 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenSate extends State<HomeScreen> {
   bool enabled = true;
   Color pickedColor = Colors.pink; //TODO QUANDO TAPPO ALTRI TASTI RESETTA
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.device.disconnect();
+  }
 
   void changeColor() {
     _resetPickedColor();
