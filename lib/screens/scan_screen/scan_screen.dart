@@ -48,7 +48,7 @@ class ScanScreenState extends State<ScanScreen> {
       });
 
   Future<void> _handleWithLoadings(Future Function() callback) async {
-    EasyLoading.show();
+    EasyLoading.show(status: "Loading..", dismissOnTap: false);
     try {
       await callback();
       await EasyLoading.dismiss();

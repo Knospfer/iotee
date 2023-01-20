@@ -54,7 +54,7 @@ class IoteeBluetoothService {
       );
 
   Future<void> _handleWithLoadings(Future Function() callback) async {
-    EasyLoading.show(dismissOnTap: false);
+    EasyLoading.show(dismissOnTap: false, status: "Loading..");
     try {
       await callback();
     } catch (_) {
