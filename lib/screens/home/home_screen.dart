@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:iotee/core/constants.dart';
+import 'package:iotee/non_functional_requirements/bluetooth_service.dart';
 import 'package:iotee/screens/home/home_widget_view.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,8 +14,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenSate extends State<HomeScreen> {
-  bool enabled = true;
-  Color pickedColor = Colors.pink; //TODO QUANDO TAPPO ALTRI TASTI RESETTA
+  final btService = IoteeBluetoothService();
+  Color pickedColor = Colors.pink;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    btService.init(widget.device, initFailedCallback: () {});
+  }
 
   @override
   void dispose() {
@@ -22,32 +29,23 @@ class HomeScreenSate extends State<HomeScreen> {
     widget.device.disconnect();
   }
 
-  void changeColor() {
-    _resetPickedColor();
-  }
+  Future<void> toggleEnabled() => btService.sendMessageWithLoading(
+        TOGGLE_ON_OFF,
+        callback: _resetEnableState,
+      );
 
-  void slowRainbowMode() {
-    _resetPickedColor();
-  }
+  Future<void> changeColor() => btService.sendMessageWithLoading(
+        CHANGE_COLOR,
+        callback: _resetPickedColor,
+      );
 
-  void fastRainbowMode() {
-    _resetPickedColor();
-  }
+  Future<void> slowRainbowMode() => btService.sendMessageWithLoading(
+        SLOW_RAINBOW_MODE,
+        callback: _resetPickedColor,
+      );
 
-  void toggleEnabled() {
-    _handleWithLoadings(() async {
-      await Future.delayed(Duration(seconds: 1));
-
-      _resetPickedColor();
-    });
-
-    setState(() {
-      enabled = !enabled;
-    });
-  }
-
-  void showColorPicker(BuildContext context) {
-    showModalBottomSheet(
+  Future<void> showColorPicker(BuildContext context) async {
+    await showModalBottomSheet(
       context: context,
       backgroundColor: const Color.fromARGB(245, 245, 245, 245),
       shape: const RoundedRectangleBorder(
@@ -65,22 +63,14 @@ class HomeScreenSate extends State<HomeScreen> {
         },
       ),
     );
-    //TODO QUA AGGIORNA BT
+
+    //todo pwm
   }
 
-  Future<void> _handleWithLoadings(Future Function() callback) async {
-    EasyLoading.show();
-    try {
-      await callback();
-      await EasyLoading.dismiss();
-      await EasyLoading.showToast(
-        "Success!",
-        toastPosition: EasyLoadingToastPosition.bottom,
-        maskType: EasyLoadingMaskType.none,
-      );
-    } catch (_) {
-      await EasyLoading.showError("Error");
-    }
+  void _resetEnableState() {
+    setState(() {
+      pickedColor = Colors.pink;
+    });
   }
 
   void _resetPickedColor() {

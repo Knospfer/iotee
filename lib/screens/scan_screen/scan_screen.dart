@@ -63,11 +63,6 @@ class ScanScreenState extends State<ScanScreen> {
     try {
       await callback();
       await EasyLoading.dismiss();
-      await EasyLoading.showToast(
-        "Success!",
-        toastPosition: EasyLoadingToastPosition.bottom,
-        maskType: EasyLoadingMaskType.none,
-      );
     } catch (_) {
       await EasyLoading.showError("Error");
     }

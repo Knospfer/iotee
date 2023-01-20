@@ -64,7 +64,7 @@ class _FilledView extends StatelessWidget {
             child: IoteeButton(
               label: "Change color!",
               onTap: parent.state.changeColor,
-              enabled: parent.state.enabled,
+              // enabled: parent.state.enabled,
             ),
           ),
         ),
@@ -74,17 +74,7 @@ class _FilledView extends StatelessWidget {
             child: IoteeButton(
               label: "Rainbow mode",
               onTap: parent.state.slowRainbowMode,
-              enabled: parent.state.enabled,
-            ),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: IoteeButton(
-              label: "Fast Rainbow mode",
-              onTap: parent.state.fastRainbowMode,
-              enabled: parent.state.enabled,
+              // enabled: parent.state.enabled,
             ),
           ),
         ),
@@ -95,7 +85,7 @@ class _FilledView extends StatelessWidget {
               label: "Custom color",
               backgroundColor: parent.state.pickedColor,
               onTap: () => parent.state.showColorPicker(context),
-              enabled: parent.state.enabled,
+              // enabled: parent.state.enabled,
             ),
           ),
         ),
