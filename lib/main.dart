@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
           elevation: 0,
           titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
         ),
+        scaffoldBackgroundColor: const Color(0xF7F7F7),
       ),
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
