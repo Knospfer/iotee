@@ -11,7 +11,14 @@ class HomeWidgetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _FilledView(this),
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 200),
+        transitionBuilder: (child, animation) => FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+        child: state.isEmpty ? _EmptyView(this) : _FilledView(this),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: state.toggleEnabled,
         child: const Icon(Icons.power_settings_new),

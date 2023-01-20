@@ -14,13 +14,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenSate extends State<HomeScreen> {
+  bool isEmpty = false;
   final btService = IoteeBluetoothService();
   Color pickedColor = Colors.pink;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    btService.init(widget.device, initFailedCallback: () {});
+    btService.init(widget.device, initFailedCallback: () {
+      setState(() {
+        isEmpty = true;
+      });
+    });
   }
 
   @override
@@ -31,7 +36,7 @@ class HomeScreenSate extends State<HomeScreen> {
 
   Future<void> toggleEnabled() => btService.sendMessageWithLoading(
         TOGGLE_ON_OFF,
-        callback: _resetEnableState,
+        callback: _resetPickedColor,
       );
 
   Future<void> changeColor() => btService.sendMessageWithLoading(
@@ -65,12 +70,6 @@ class HomeScreenSate extends State<HomeScreen> {
     );
 
     //todo pwm
-  }
-
-  void _resetEnableState() {
-    setState(() {
-      pickedColor = Colors.pink;
-    });
   }
 
   void _resetPickedColor() {
