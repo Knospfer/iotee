@@ -53,10 +53,10 @@ class ScanScreenState extends State<ScanScreen> {
     });
   }
 
-  Future<void> connect(BluetoothDevice device) async {
-    await _handleWithLoadings(device.connect);
-    context.router.replace(HomeRoute(device: device));
-  }
+  Future<void> connect(BluetoothDevice device) => _handleWithLoadings(() async {
+        await device.connect();
+        context.router.replace(HomeRoute(device: device));
+      });
 
   Future<void> _handleWithLoadings(Future Function() callback) async {
     EasyLoading.show();
