@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:iotee/core/constants.dart';
+import 'package:iotee/core/route.dart';
 import 'package:iotee/non_functional_requirements/bluetooth_service.dart';
 import 'package:iotee/screens/home/home_widget_view.dart';
 
@@ -32,6 +34,10 @@ class HomeScreenSate extends State<HomeScreen> {
   void dispose() {
     super.dispose();
     widget.device.disconnect();
+  }
+
+  void navigateToSearch() {
+    context.router.replace(const ScanRoute());
   }
 
   Future<void> toggleEnabled() => btService.sendMessageWithLoading(

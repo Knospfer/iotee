@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iotee/core/widgets/iotee_button.dart';
+import 'package:iotee/core/widgets/no_items_placeholder.dart';
 import 'package:iotee/screens/home/home_screen.dart';
-import 'package:lottie/lottie.dart';
 
 class HomeWidgetView extends StatelessWidget {
   final HomeScreenSate state;
@@ -12,12 +12,14 @@ class HomeWidgetView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 200),
-        transitionBuilder: (child, animation) => FadeTransition(
-          opacity: animation,
-          child: child,
-        ),
-        child: state.isEmpty ? _EmptyView(this) : _FilledView(this),
+        duration: const Duration(seconds: 1),
+        // transitionBuilder: (child, animation) => FadeTransition(
+        //   opacity: animation,
+        //   child: child,
+        // ),
+        child: state.isEmpty
+            ? _EmptyView(this, key: UniqueKey())
+            : _FilledView(this, key: UniqueKey()),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: state.toggleEnabled,
@@ -30,32 +32,18 @@ class HomeWidgetView extends StatelessWidget {
 class _EmptyView extends StatelessWidget {
   final HomeWidgetView parent;
 
-  const _EmptyView(this.parent);
+  const _EmptyView(this.parent, {Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Lottie.asset(
-            'assets/empty-box.json',
-            height: 200,
-            width: 200,
-            repeat: false,
-          ),
-          const Text("No connected items found!"),
-          TextButton(onPressed: () {}, child: const Text("Seach!")),
-        ],
-      ),
-    );
+    return NoItemsPlaceholder(onSearchTapped: parent.state.navigateToSearch);
   }
 }
 
 class _FilledView extends StatelessWidget {
   final HomeWidgetView parent;
 
-  const _FilledView(this.parent);
+  const _FilledView(this.parent, {Key? key});
 
   @override
   Widget build(BuildContext context) {

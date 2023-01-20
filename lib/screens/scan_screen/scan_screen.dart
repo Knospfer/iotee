@@ -23,14 +23,6 @@ class ScanScreenState extends State<ScanScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    subscription = flutterBlue.scanResults.listen((results) {
-      if (results.isEmpty) return;
-      setState(() {
-        scanning = false;
-      });
-    });
-
     startScanning();
   }
 
@@ -44,10 +36,7 @@ class ScanScreenState extends State<ScanScreen> {
     setState(() {
       scanning = true;
     });
-    flutterBlue.startScan(timeout: const Duration(seconds: 4));
-
-    //aggiorno la grafica se non ho trovato niente
-    await Future.delayed(const Duration(seconds: 4));
+    await flutterBlue.startScan(timeout: const Duration(seconds: 4));
     setState(() {
       scanning = false;
     });
