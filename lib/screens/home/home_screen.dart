@@ -4,6 +4,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:iotee/core/constants.dart';
 import 'package:iotee/core/route.dart';
+import 'package:iotee/main.dart';
 import 'package:iotee/non_functional_requirements/bluetooth_service.dart';
 import 'package:iotee/screens/home/home_widget_view.dart';
 
@@ -18,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenSate extends State<HomeScreen> {
   bool isEmpty = false;
   final btService = IoteeBluetoothService();
-  Color pickedColor = Colors.pink;
+  Color pickedColor = darkColor;
 
   @override
   void didChangeDependencies() {
@@ -58,7 +59,7 @@ class HomeScreenSate extends State<HomeScreen> {
   Future<void> showColorPicker(BuildContext context) async {
     await showModalBottomSheet(
       context: context,
-      backgroundColor: const Color.fromARGB(245, 245, 245, 245),
+      backgroundColor: darkColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),

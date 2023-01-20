@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iotee/core/widgets/iotee_button.dart';
 import 'package:iotee/core/widgets/no_items_placeholder.dart';
 import 'package:iotee/screens/home/home_screen.dart';
 
@@ -16,10 +15,6 @@ class HomeWidgetView extends StatelessWidget {
         child: state.isEmpty
             ? _EmptyView(this, key: UniqueKey())
             : _FilledView(this, key: UniqueKey()),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: state.toggleEnabled,
-        child: const Icon(Icons.power_settings_new),
       ),
     );
   }
@@ -50,37 +45,88 @@ class _FilledView extends StatelessWidget {
         ),
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
-                .copyWith(top: 36),
-            child: IoteeButton(
-              label: "Change color!",
-              onTap: parent.state.changeColor,
-              // enabled: parent.state.enabled,
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              parent.state.widget.device.name,
+              style: const TextStyle(fontSize: 12),
             ),
           ),
         ),
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: IoteeButton(
-              label: "Rainbow mode",
+            padding: const EdgeInsets.all(16).copyWith(top: 44),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: parent.state.toggleEnabled,
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    alignment: Alignment.center,
+                    decoration: ButtonStyle(),
+                    child: const Icon(
+                      Icons.power_settings_new,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 24),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: parent.state.changeColor,
+                    child: Container(
+                      height: 60,
+                      alignment: Alignment.center,
+                      decoration: ButtonStyle(),
+                      child: const Text("COLOR"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: GestureDetector(
               onTap: parent.state.slowRainbowMode,
-              // enabled: parent.state.enabled,
+              child: Container(
+                height: 200,
+                alignment: Alignment.center,
+                decoration: ButtonStyle(),
+                child: const Text("RAINBOW"),
+              ),
             ),
           ),
         ),
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: IoteeButton(
-              label: "Custom color",
-              backgroundColor: parent.state.pickedColor,
+            padding: const EdgeInsets.all(16),
+            child: GestureDetector(
               onTap: () => parent.state.showColorPicker(context),
-              // enabled: parent.state.enabled,
+              child: Container(
+                height: 60,
+                alignment: Alignment.center,
+                decoration: ButtonStyle().copyWith(
+                  color: parent.state.pickedColor,
+                ),
+                child: const Text("CUSTOM"),
+              ),
             ),
           ),
         ),
       ],
     );
   }
+}
+
+class ButtonStyle extends BoxDecoration {
+  ButtonStyle()
+      : super(
+          borderRadius: const BorderRadius.all(Radius.circular(60)),
+          border: Border.all(
+            color: Colors.white,
+          ),
+        );
 }
