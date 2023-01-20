@@ -65,7 +65,7 @@ class _LoadedPage extends StatelessWidget {
               final device = items[index].device;
 
               return ListTile(
-                onTap: () => state.connect(device.id.id),
+                onTap: () => state.connect(device),
                 title: Text(device.name),
                 subtitle: Text(device.id.id),
               );
