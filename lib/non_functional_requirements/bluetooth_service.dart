@@ -38,6 +38,7 @@ class IoteeBluetoothService {
   Future<void> sendMessageWithLoading(String message, {Function? callback}) =>
       _handleWithLoadings(
         () async {
+          //Forgive me father because I have sinned
           await writeCharacteristic.write(utf8.encode(message));
           Future.delayed(const Duration(milliseconds: 400));
           await writeCharacteristic.write(utf8.encode(message));
