@@ -3,10 +3,9 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:iotee/core/constants.dart';
 
-class IoteeBluetoothService {
+class IoteeBluetoothMessagingService {
   late final BluetoothCharacteristic readCharacteristic;
   late final BluetoothCharacteristic writeCharacteristic;
 
@@ -35,32 +34,18 @@ class IoteeBluetoothService {
     writeCharacteristic = write;
   }
 
-  Future<void> sendMessageWithLoading(String message, {Function? callback}) =>
-      _handleWithLoadings(
-        () async {
-          //Forgive me father because I have sinned
-          await writeCharacteristic.write(utf8.encode(message));
-          Future.delayed(const Duration(milliseconds: 400));
-          await writeCharacteristic.write(utf8.encode(message));
-          Future.delayed(const Duration(milliseconds: 400));
-          await writeCharacteristic.write(utf8.encode(message));
-          Future.delayed(const Duration(milliseconds: 400));
-          await writeCharacteristic.write(utf8.encode(message));
-          Future.delayed(const Duration(milliseconds: 400));
-          await writeCharacteristic.write(utf8.encode(message));
-          Future.delayed(const Duration(milliseconds: 500));
-          callback?.call();
-        },
-      );
-
-  Future<void> _handleWithLoadings(Future Function() callback) async {
-    EasyLoading.show(dismissOnTap: false, status: "Loading..");
-    try {
-      await callback();
-    } catch (_) {
-      await EasyLoading.showError("Error");
-    } finally {
-      EasyLoading.dismiss();
-    }
+  Future<void> sendMessage(String message, {Function? callback}) async {
+    //Forgive me father because I have sinned
+    await writeCharacteristic.write(utf8.encode(message));
+    Future.delayed(const Duration(milliseconds: 400));
+    await writeCharacteristic.write(utf8.encode(message));
+    Future.delayed(const Duration(milliseconds: 400));
+    await writeCharacteristic.write(utf8.encode(message));
+    Future.delayed(const Duration(milliseconds: 400));
+    await writeCharacteristic.write(utf8.encode(message));
+    Future.delayed(const Duration(milliseconds: 400));
+    await writeCharacteristic.write(utf8.encode(message));
+    Future.delayed(const Duration(milliseconds: 500));
+    callback?.call();
   }
 }

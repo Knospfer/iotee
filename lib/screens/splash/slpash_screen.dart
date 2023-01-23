@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -26,13 +28,22 @@ class _SplashScreenState extends State<SplashScreen>
       if (status != AnimationStatus.completed) return;
 
       await checkNeededPermissions();
-      //TODO CONTROLLA PAIRING SE SI PUO
       context.router.replace(const ScanRoute());
     });
   }
 
   Future<void> checkNeededPermissions() async {
     final bluetooth = await Permission.bluetooth.status;
+
+    if (Platform.isAndroid) await _checkAndroidPermissions();
+
+    if (bluetooth.isDenied) {
+      await Permission.bluetooth.request();
+    }
+  }
+
+  //Android needs Location Permission in order to use Bluetooth
+  Future<void> _checkAndroidPermissions() async {
     final location = await Permission.location.status;
     final locationWhenInUse = await Permission.locationWhenInUse.status;
 
@@ -42,10 +53,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (locationWhenInUse.isDenied) {
       await Permission.locationWhenInUse.request();
-    }
-
-    if (bluetooth.isDenied) {
-      await Permission.bluetooth.request();
     }
   }
 

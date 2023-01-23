@@ -53,69 +53,91 @@ class _FilledView extends StatelessWidget {
           padding: const EdgeInsets.all(16).copyWith(top: 30),
           child: Row(
             children: [
-              GestureDetector(
+              _Button(
+                width: 60,
+                padding: EdgeInsets.zero,
                 onTap: parent.state.toggleEnabled,
-                child: Container(
-                  height: 60,
-                  width: 60,
-                  alignment: Alignment.center,
-                  decoration: ButtonStyle(),
-                  child: const Icon(
-                    Icons.power_settings_new,
-                    color: Colors.white,
-                  ),
+                isLoading: parent.state.isBluetoothRequestRunning,
+                child: const Icon(
+                  Icons.power_settings_new,
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(width: 24),
               Expanded(
-                child: GestureDetector(
-                  onTap: parent.state.changeColor,
-                  child: Container(
-                    height: 60,
-                    alignment: Alignment.center,
-                    decoration: ButtonStyle(),
-                    child: const Text("COLOR"),
-                  ),
+                child: _Button(
+                  padding: EdgeInsets.zero,
+                  onTap: () => parent.state.changeColor,
+                  isLoading: parent.state.isBluetoothRequestRunning,
+                  child: const Text("COLOR"),
                 ),
               ),
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: GestureDetector(
-            onTap: parent.state.slowRainbowMode,
-            child: Container(
-              height: 200,
-              alignment: Alignment.center,
-              decoration: ButtonStyle(),
-              child: const Text("RAINBOW"),
-            ),
-          ),
+        _Button(
+          onTap: () => parent.state.slowRainbowMode,
+          isLoading: parent.state.isBluetoothRequestRunning,
+          height: 180,
+          child: const Text("RAINBOW"),
         ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: GestureDetector(
-            onTap: () => parent.state.showColorPicker(context),
-            child: Container(
-              height: 60,
-              alignment: Alignment.center,
-              decoration: ButtonStyle(),
-              child: const Text("CUSTOM"),
-            ),
-          ),
+        _Button(
+          onTap: () => parent.state.customColorMode(context),
+          isLoading: parent.state.isBluetoothRequestRunning,
+          child: const Text("CUSTOM"),
         ),
       ],
     );
   }
 }
 
-class ButtonStyle extends BoxDecoration {
-  ButtonStyle()
-      : super(
-          borderRadius: const BorderRadius.all(Radius.circular(60)),
-          border: Border.all(
-            color: Colors.white,
+class _Button extends StatelessWidget {
+  final void Function() onTap;
+  final Widget child;
+  final bool isLoading;
+  final double height;
+  final double? width;
+  final EdgeInsets padding;
+
+  const _Button({
+    required this.onTap,
+    required this.child,
+    this.isLoading = false,
+    this.width,
+    this.height = 60,
+    this.padding = const EdgeInsets.all(16),
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    const borderRadius = BorderRadius.all(Radius.circular(60));
+
+    return IgnorePointer(
+      ignoring: isLoading,
+      child: Padding(
+        padding: padding,
+        child: Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: const BoxDecoration(borderRadius: borderRadius),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              splashFactory: InkRipple.splashFactory,
+              onTap: onTap,
+              child: Container(
+                height: height,
+                width: width,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: borderRadius,
+                  border: Border.all(color: Colors.white),
+                ),
+                child: child,
+              ),
+            ),
           ),
-        );
+        ),
+      ),
+    );
+  }
 }

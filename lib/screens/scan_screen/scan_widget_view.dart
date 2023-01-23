@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:iotee/core/theme.dart';
 import 'package:iotee/core/widgets/no_items_placeholder.dart';
-import 'package:iotee/main.dart';
 import 'package:iotee/screens/scan_screen/scan_screen.dart';
 import 'package:lottie/lottie.dart';
 
