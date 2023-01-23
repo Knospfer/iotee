@@ -67,7 +67,7 @@ class _FilledView extends StatelessWidget {
               Expanded(
                 child: _Button(
                   padding: EdgeInsets.zero,
-                  onTap: () => parent.state.changeColor,
+                  onTap: parent.state.changeColor,
                   isLoading: parent.state.isBluetoothRequestRunning,
                   child: const Text("COLOR"),
                 ),
@@ -76,7 +76,7 @@ class _FilledView extends StatelessWidget {
           ),
         ),
         _Button(
-          onTap: () => parent.state.slowRainbowMode,
+          onTap: parent.state.slowRainbowMode,
           isLoading: parent.state.isBluetoothRequestRunning,
           height: 180,
           child: const Text("RAINBOW"),
