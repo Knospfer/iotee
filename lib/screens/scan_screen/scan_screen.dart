@@ -18,18 +18,10 @@ class ScanScreenState extends State<ScanScreen> {
   final flutterBlue = FlutterBluePlus.instance;
   bool scanning = false;
 
-  late final StreamSubscription subscription;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     startScanning();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    subscription.cancel();
   }
 
   Future<void> startScanning() async {
@@ -48,7 +40,7 @@ class ScanScreenState extends State<ScanScreen> {
       });
 
   Future<void> _handleWithLoadings(Future Function() callback) async {
-    EasyLoading.show(status: "Loading..", dismissOnTap: false);
+    EasyLoading.show(status: "Pairing..", dismissOnTap: false);
     try {
       await callback();
       await EasyLoading.dismiss();
