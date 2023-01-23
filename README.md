@@ -1,16 +1,25 @@
-# iotee
+# Per Marco
 
-A new Flutter project.
+Per buildare un app in Flutter su windows ti servono 3 cose:
 
-## Getting Started
+- Android Studio: https://developer.android.com/studio
+- Flutter SDK: https://docs.flutter.dev/development/tools/sdk/releases?tab=macos
 
-This project is a starting point for a Flutter application.
+Questa app utilizza la generazioen automatica del codice per alcune cose (AutoRoute)
 
-A few resources to get you started if this is your first Flutter project:
+Per questo, per buidlare l'app devi runnare questi comandi (lo step 2 è per la generazione del codice)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- flutter pub get
+- flutter pub run build_runner build --delete-conflicting-outputs
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+poi se vuoi runnare l'app direttamente sul tuo telefono devi fare
+
+- flutter run android (oppure aprire un file.dart e fare F5)
+
+invece se vuoi buildare l'apk
+
+- flutter build apk
+
+e ti metterà l'apk in build/app/outputs/flutter-apk/app-release.apk
+
+in entrambi i casi darà dei warning che saranno scritti in rosso quindi non ti preoccupare
