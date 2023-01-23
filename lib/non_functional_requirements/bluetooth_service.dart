@@ -35,17 +35,7 @@ class IoteeBluetoothMessagingService {
   }
 
   Future<void> sendMessage(String message, {Function? callback}) async {
-    //Forgive me father because I have sinned
-    await writeCharacteristic.write(utf8.encode(message));
-    Future.delayed(const Duration(milliseconds: 400));
-    await writeCharacteristic.write(utf8.encode(message));
-    Future.delayed(const Duration(milliseconds: 400));
-    await writeCharacteristic.write(utf8.encode(message));
-    Future.delayed(const Duration(milliseconds: 400));
-    await writeCharacteristic.write(utf8.encode(message));
-    Future.delayed(const Duration(milliseconds: 400));
-    await writeCharacteristic.write(utf8.encode(message));
-    Future.delayed(const Duration(milliseconds: 500));
+    await writeCharacteristic.write(utf8.encode("$message \n"));
     callback?.call();
   }
 }
