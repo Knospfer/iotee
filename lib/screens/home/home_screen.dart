@@ -21,7 +21,7 @@ class HomeScreenSate extends State<HomeScreen> {
   bool isBluetoothRequestRunning = false;
 
   final btService = IoteeBluetoothMessagingService();
-  Color pickedColor = darkColor;
+  Color pickedColor = Colors.pink;
 
   @override
   void didChangeDependencies() {
