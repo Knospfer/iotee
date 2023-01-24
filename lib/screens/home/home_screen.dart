@@ -62,11 +62,13 @@ class HomeScreenSate extends State<HomeScreen> {
           await _showColorPicker(context);
           final customColorMessage =
               "$CUSTOM_COLOR ${pickedColor.red} ${pickedColor.green} ${pickedColor.blue} 0";
-          // await btService.sendMessageWithLoading(customColorMessage) //MARCO: scommenta questa riga per abilitare la chiamata a PWM
+
+          await btService.sendMessage(customColorMessage);
         },
       );
 
   Future<void> _showColorPicker(BuildContext context) => showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         backgroundColor: darkColor,
         shape: const RoundedRectangleBorder(
@@ -74,14 +76,28 @@ class HomeScreenSate extends State<HomeScreen> {
             top: Radius.circular(20),
           ),
         ),
-        builder: (_) => ColorPicker(
-          pickerColor: pickedColor,
-          paletteType: PaletteType.hueWheel,
-          onColorChanged: (value) {
-            setState(() {
-              pickedColor = value;
-            });
-          },
+        builder: (innerContext) => FractionallySizedBox(
+          heightFactor: 0.8,
+          child: Column(
+            children: [
+              const ColorPickerHeader(),
+              const SizedBox(height: 8),
+              Expanded(
+                child: Center(
+                  child: ColorPicker(
+                    pickerColor: pickedColor,
+                    paletteType: PaletteType.hueWheel,
+                    pickerAreaHeightPercent: 0.8,
+                    onColorChanged: (value) {
+                      setState(() {
+                        pickedColor = value;
+                      });
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       );
 

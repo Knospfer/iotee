@@ -10,6 +10,7 @@ final ioteeThemeData = ThemeData(
     headline1: TextStyle(color: textColor),
     headline2: TextStyle(color: textColor),
     bodyText2: TextStyle(color: textColor),
+    bodyText1: TextStyle(color: textColor),
     subtitle1: TextStyle(color: textColor),
   ),
   platform: TargetPlatform.iOS,
@@ -26,4 +27,5 @@ final ioteeThemeData = ThemeData(
     ),
   ),
   scaffoldBackgroundColor: darkerColor,
+  canvasColor: darkColor,
 );
